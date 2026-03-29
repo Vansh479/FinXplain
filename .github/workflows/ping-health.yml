@@ -1,0 +1,13 @@
+name: Ping Health Endpoint Every 5 Minutes
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' 
+  workflow_dispatch:       
+
+fis:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping https://finxplain.vercel.app/
+        run: curl -s -o /dev/null -w "%{http_code}" https://finxplain.vercel.app/

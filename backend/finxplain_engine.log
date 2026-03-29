@@ -1,0 +1,246 @@
+2026-03-29 01:17:27.436 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /docs
+2026-03-29 01:17:27.445 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0107s
+2026-03-29 01:17:28.065 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /openapi.json
+2026-03-29 01:17:28.102 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0367s
+2026-03-29 01:18:18.806 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /health/
+2026-03-29 01:18:18.814 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0078s
+2026-03-29 01:33:11.069 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 01:33:16.754 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 01:36:33.671 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 01:37:01.012 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 01:41:59.179 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 01:43:46.344 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 01:47:41.382 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 01:47:41.751 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.3699s
+2026-03-29 01:48:04.427 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/login
+2026-03-29 01:49:59.295 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/login
+2026-03-29 01:49:59.646 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.3513s
+2026-03-29 01:49:59.670 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 01:49:59.675 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0052s
+2026-03-29 01:49:59.682 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 01:49:59.684 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0023s
+2026-03-29 01:49:59.724 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 01:49:59.730 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0057s
+2026-03-29 01:49:59.731 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 01:49:59.736 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0044s
+2026-03-29 01:50:47.766 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 01:50:47.874 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.1097s
+2026-03-29 01:50:47.888 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 01:50:47.916 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0278s
+2026-03-29 01:50:51.629 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 01:50:51.665 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0393s
+2026-03-29 01:50:51.679 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 01:50:51.696 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 01:50:51.704 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0253s
+2026-03-29 01:50:51.717 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0204s
+2026-03-29 01:50:51.718 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 01:50:51.721 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0027s
+2026-03-29 02:00:41.775 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 02:00:42.029 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 422 | Latency: 0.2627s
+2026-03-29 02:08:15.289 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 02:08:15.405 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.1197s
+2026-03-29 02:08:15.411 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 02:08:15.421 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0099s
+2026-03-29 02:08:15.440 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 02:08:15.489 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0484s
+2026-03-29 02:08:15.495 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 02:08:15.506 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0109s
+2026-03-29 02:08:56.176 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 02:08:56.237 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 422 | Latency: 0.0616s
+2026-03-29 02:18:34.313 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 09:46:40.587 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 09:46:40.789 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 401 | Latency: 0.2054s
+2026-03-29 09:52:15.235 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 09:52:15.446 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 401 | Latency: 0.2136s
+2026-03-29 09:54:43.075 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 09:54:43.135 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 401 | Latency: 0.0595s
+2026-03-29 10:10:19.496 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 10:10:19.573 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 401 | Latency: 0.0777s
+2026-03-29 10:11:23.152 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 10:11:23.550 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.3980s
+2026-03-29 10:11:46.633 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/login
+2026-03-29 10:11:46.947 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.3170s
+2026-03-29 10:11:46.982 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 10:11:46.996 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0143s
+2026-03-29 10:11:46.999 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 10:11:47.021 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0217s
+2026-03-29 10:11:47.046 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 10:11:47.109 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0702s
+2026-03-29 10:11:47.111 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 10:11:47.122 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0109s
+2026-03-29 10:12:27.041 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 10:12:27.075 | INFO     | app.routes.reports:query_financial_engine:17 - RAG Request: User mightyraju@gmail.com uploaded 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:12:27.077 | ERROR    | app.routes.reports:query_financial_engine:38 - Financial query failed: get_financial_summary() takes from 1 to 2 positional arguments but 3 were given
+2026-03-29 10:12:27.079 | DEBUG    | app.routes.reports:query_financial_engine:39 - Traceback (most recent call last):
+  File "/Users/vanshrawat/projects/finxplain/backend/app/routes/reports.py", line 20, in query_financial_engine
+    result = get_financial_summary(fi_description, reportssheet_type, fiscal_pdf)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+TypeError: get_financial_summary() takes from 1 to 2 positional arguments but 3 were given
+
+2026-03-29 10:12:27.082 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 500 | Latency: 0.0525s
+2026-03-29 10:16:40.075 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 10:16:40.128 | INFO     | app.routes.reports:query_financial_engine:17 - RAG Request: User mightyraju@gmail.com uploaded 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:16:40.128 | INFO     | app.service.summary:get_financial_summary:9 - RAG: Extracting text from 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:16:40.401 | ERROR    | app.service.llm.gemini:generate:28 - Gemini Inference Error: 6 validation errors for GenerateContentConfig
+response_schema.dict[any,any]
+  Input should be a valid dictionary [type=dict_type, input_value='analyst', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/dict_type
+response_schema.custom-error[is-instance[type]]
+  Input should be a type [type=is_type, input_value='analyst', input_type=str]
+response_schema.Schema
+  Input should be a valid dictionary or object to extract fields from [type=model_attributes_type, input_value='analyst', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/model_attributes_type
+response_schema.is-instance[GenericAlias]
+  Input should be an instance of GenericAlias [type=is_instance_of, input_value='analyst', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/is_instance_of
+response_schema.is-instance[UnionType]
+  Input should be an instance of UnionType [type=is_instance_of, input_value='analyst', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/is_instance_of
+response_schema.is-instance[_UnionGenericAlias]
+  Input should be an instance of _UnionGenericAlias [type=is_instance_of, input_value='analyst', input_type=str]
+    For further information visit https://errors.pydantic.dev/2.11/v/is_instance_of
+2026-03-29 10:16:40.404 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.3291s
+2026-03-29 10:19:34.302 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 10:19:34.395 | INFO     | app.routes.reports:query_financial_engine:17 - RAG Request: User mightyraju@gmail.com uploaded 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:19:34.395 | INFO     | app.service.summary:get_financial_summary:10 - RAG: Extracting text from 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:20:01.496 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 27.1937s
+2026-03-29 10:23:32.914 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 10:23:32.960 | INFO     | app.routes.reports:query_financial_engine:17 - RAG Request: User mightyraju@gmail.com uploaded 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:23:32.961 | INFO     | app.service.summary:get_financial_summary:10 - RAG: Extracting text from 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:24:07.708 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 34.7945s
+2026-03-29 10:28:40.553 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 10:28:40.988 | INFO     | app.routes.reports:query_financial_engine:17 - RAG Request: User mightyraju@gmail.com uploaded 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:28:40.990 | INFO     | app.service.summary:get_financial_summary:11 - RAG: Extracting text from 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:29:15.193 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 34.6626s
+2026-03-29 10:32:09.895 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 10:32:10.055 | INFO     | app.routes.reports:query_financial_engine:17 - RAG Request: User mightyraju@gmail.com uploaded 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:32:10.055 | INFO     | app.service.summary:get_financial_summary:11 - RAG: Extracting text from 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 10:33:14.280 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 64.3925s
+2026-03-29 10:37:47.406 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 10:37:47.715 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.3229s
+2026-03-29 10:37:47.721 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 10:37:47.729 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0077s
+2026-03-29 10:37:47.745 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 10:37:47.799 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0544s
+2026-03-29 10:37:47.800 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 10:37:47.802 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0021s
+2026-03-29 10:53:29.883 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 10:53:30.115 | INFO     | app.routes.reports:query_financial_engine:17 - RAG Request: User mightyraju@gmail.com uploaded Clicks-Sustainability-Report-2022.pdf
+2026-03-29 10:54:00.838 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 30.9624s
+2026-03-29 11:02:12.385 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 11:02:12.574 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.1974s
+2026-03-29 11:02:12.575 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 11:02:12.577 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0024s
+2026-03-29 11:02:12.593 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 11:02:12.618 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0246s
+2026-03-29 11:02:12.622 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 11:02:12.626 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0048s
+2026-03-29 11:02:47.253 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 11:02:47.328 | INFO     | app.routes.reports:query_financial_engine:17 - RAG Request: User mightyraju@gmail.com uploaded 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 11:03:22.395 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 35.1427s
+2026-03-29 11:08:50.089 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 11:08:50.201 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.1134s
+2026-03-29 11:08:50.211 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 11:08:50.216 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0045s
+2026-03-29 11:08:50.222 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 11:08:50.240 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0175s
+2026-03-29 11:08:50.243 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 11:08:50.252 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0090s
+2026-03-29 11:09:19.889 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 11:09:19.950 | INFO     | app.routes.reports:query_financial_engine:17 - RAG Request: User mightyraju@gmail.com uploaded 2022-Absa-Group-limited-Environmental-Social-and-Governance-Data-sheet.pdf
+2026-03-29 11:09:45.302 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 25.4136s
+2026-03-29 11:10:09.870 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 11:10:09.899 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0307s
+2026-03-29 11:10:09.918 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 11:10:09.920 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0021s
+2026-03-29 11:10:11.776 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 11:10:11.913 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.1377s
+2026-03-29 11:10:11.920 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 11:10:11.923 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0035s
+2026-03-29 11:10:12.211 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 11:10:12.230 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0184s
+2026-03-29 11:10:12.232 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 11:10:12.243 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0112s
+2026-03-29 12:14:55.382 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/login
+2026-03-29 12:14:55.689 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.3070s
+2026-03-29 12:14:55.707 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 12:14:55.715 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0084s
+2026-03-29 12:14:55.717 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-03-29 12:14:55.719 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0025s
+2026-03-29 12:14:55.744 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 12:14:55.749 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0047s
+2026-03-29 12:14:55.750 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-03-29 12:14:55.758 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0075s
+2026-03-29 12:15:18.564 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:15:26.652 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:15:59.193 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 40.6318s
+2026-03-29 12:22:11.730 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:22:24.333 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:23:28.159 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 76.4306s
+2026-03-29 12:24:32.151 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:24:38.998 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:25:08.559 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 36.4099s
+2026-03-29 12:29:04.897 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:29:11.426 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:29:25.069 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 20.1726s
+2026-03-29 12:30:04.249 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:30:15.165 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:30:26.726 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 22.4785s
+2026-03-29 12:37:01.570 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:37:09.623 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:37:11.228 | ERROR    | app.service.summary:get_financial_summary:66 - RAG Engine Error: 'GeminiLLM' object has no attribute 'generate_content'
+2026-03-29 12:37:11.234 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 500 | Latency: 9.6646s
+2026-03-29 12:39:04.835 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:39:13.439 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:39:14.434 | ERROR    | app.service.summary:get_financial_summary:63 - RAG Engine Error: 'GeminiLLM' object has no attribute 'generate_content'
+2026-03-29 12:39:14.440 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 500 | Latency: 9.6058s
+2026-03-29 12:40:52.719 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:41:00.214 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:41:02.102 | ERROR    | app.service.llm.gemini:generate_content:26 - Gemini Raw Text Error: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 0, model: gemini-2.0-flash\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_input_token_count, limit: 0, model: gemini-2.0-flash\nPlease retry in 58.373057097s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerMinutePerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}, {'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_input_token_count', 'quotaId': 'GenerateContentInputTokensPerModelPerMinute-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.0-flash'}}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '58s'}]}}
+2026-03-29 12:41:02.104 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 9.3852s
+2026-03-29 12:42:42.104 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:42:49.290 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:42:50.895 | ERROR    | app.service.llm.gemini:generate_content:40 - DEBUG: Gemini API failed with error: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'models/gemini-1.5-flash is not found for API version v1beta, or is not supported for generateContent. Call ListModels to see the list of available models and their supported methods.', 'status': 'NOT_FOUND'}}
+2026-03-29 12:42:50.898 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 8.7946s
+2026-03-29 12:44:06.182 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:44:12.720 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:44:16.542 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 10.3607s
+2026-03-29 12:44:41.649 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:44:49.207 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:44:54.043 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 12.3940s
+2026-03-29 12:48:13.913 | INFO     | app.service.summary:<module>:13 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 12:48:21.873 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:48:21.996 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:48:34.310 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 12.3133s
+2026-03-29 12:49:51.824 | INFO     | app.service.summary:<module>:13 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 12:50:01.071 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 12:50:04.665 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:50:18.138 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 13.4729s
+2026-03-29 12:50:50.166 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:51:01.350 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 11.1838s
+2026-03-29 12:51:17.790 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:51:22.955 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 5.1670s
+2026-03-29 12:51:44.466 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:51:48.448 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 3.9821s
+2026-03-29 12:54:13.279 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 12:54:52.835 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 39.5570s
+2026-03-29 13:02:16.907 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 13:02:30.825 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 13.9191s
+2026-03-29 13:03:32.101 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-03-29 13:03:54.386 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 22.2846s
+2026-03-29 14:51:29.058 | INFO     | app.service.summary:<module>:13 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 14:51:35.365 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 14:52:05.672 | INFO     | app.service.summary:<module>:10 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 14:52:14.031 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 14:52:19.887 | INFO     | app.service.summary:<module>:10 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 14:52:27.120 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 14:52:33.219 | INFO     | app.service.summary:<module>:10 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 14:52:39.547 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 14:52:47.678 | INFO     | app.service.summary:<module>:10 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 14:52:56.290 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 14:53:09.037 | INFO     | app.service.summary:<module>:10 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 14:53:14.989 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 14:53:27.183 | INFO     | app.service.summary:<module>:10 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 14:53:33.449 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 14:58:12.962 | INFO     | app.service.summary:<module>:10 - FinXplain Engine: Pre-loading RAG Engine and LLM...
+2026-03-29 14:58:26.827 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
