@@ -1,29 +1,52 @@
 import os
 import datetime
+import gc  
 from pypdf import PdfReader
 from loguru import logger
 from app.service.llm.gemini import GeminiLLM
 from app.schemas.response import analyst_schema, investor_schema
 from app.service.rag_engine import RAGEngine
 
-try:
-    logger.info("FinXplain Engine: Pre-loading RAG Engine and LLM...")
-    global_rag_engine = RAGEngine()
-    llm_client = GeminiLLM()
-except Exception as e:
-    logger.error(f"Engine Startup Failure: {e}")
-    global_rag_engine = None 
-    llm_client = None
+_global_rag_engine = None
+_llm_client = None
+
+def get_rag_engine():
+    """Lazy initializer for RAG Engine - Loads only when needed"""
+    global _global_rag_engine
+    if _global_rag_engine is None:
+        try:
+            logger.info("FinXplain: Loading RAG Engine into RAM...")
+            _global_rag_engine = RAGEngine()
+            gc.collect() 
+        except Exception as e:
+            logger.error(f"RAG Engine Load Failure: {e}")
+    return _global_rag_engine
+
+def get_llm_client():
+    """Lazy initializer for LLM Client"""
+    global _llm_client
+    if _llm_client is None:
+        try:
+            _llm_client = GeminiLLM()
+        except Exception as e:
+            logger.error(f"LLM Client Load Failure: {e}")
+    return _llm_client
 
 def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None) -> dict | None:
     try:
+        engine = get_rag_engine()
+        llm = get_llm_client()
+
+        if not llm:
+            raise ValueError("LLM Client not initialized")
+
         query_lower = user_query.lower()
         definitions = ["what is", "define", "meaning", "explain", "concept", "definition"]
         is_general_query = any(word in query_lower for word in definitions)
 
         kb_context = ""
-        if global_rag_engine:
-            kb_chunks = global_rag_engine.retrieve(user_query, top_k=5)
+        if engine:
+            kb_chunks = engine.retrieve(user_query, top_k=4) 
             kb_context = "\n".join(kb_chunks) if kb_chunks else ""
 
         uploaded_context = ""
@@ -40,7 +63,6 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None) 
                 logger.error(f"PDF Parse Error: {pdf_err}")
 
         combined_context = f"--- STATIC KNOWLEDGE BASE ---\n{kb_context}\n\n--- UPLOADED DOCUMENT ---\n{uploaded_context}"
-
       
         smart_prompt = f"""
         ROLE: Senior Financial Analyst AI
@@ -60,12 +82,14 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None) 
         """
 
         if is_general_query:
-            response_data = llm_client.generate_content(smart_prompt) 
+            response_data = llm.generate_content(smart_prompt) 
             final_type = "chat"
         else:
             schema = analyst_schema if analysis_type == "analyst" else investor_schema
-            response_data = llm_client.generate(smart_prompt, schema)
+            response_data = llm.generate(smart_prompt, schema)
             final_type = analysis_type
+
+        gc.collect()
 
         return {
             "id": "gen-" + os.urandom(4).hex(),
