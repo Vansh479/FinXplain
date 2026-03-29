@@ -244,3 +244,11 @@ response_schema.is-instance[_UnionGenericAlias]
 2026-03-29 14:53:33.449 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
 2026-03-29 14:58:12.962 | INFO     | app.service.summary:<module>:10 - FinXplain Engine: Pre-loading RAG Engine and LLM...
 2026-03-29 14:58:26.827 | INFO     | app.service.rag_engine:__init__:19 - RAG: Loaded 664 financial segments.
+2026-03-29 18:08:12.174 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 18:08:12.361 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 400 | Latency: 0.1939s
+2026-03-29 18:09:44.390 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 18:09:44.469 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 400 | Latency: 0.0805s
+2026-03-29 18:10:41.038 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/login
+2026-03-29 18:10:41.091 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 404 | Latency: 0.0537s
+2026-03-29 18:11:23.392 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /auth/sign-up
+2026-03-29 18:11:23.823 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.4306s
