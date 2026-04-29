@@ -45,7 +45,7 @@ class RAGEngine:
         """API-based embeddings: Uses ~0MB of your Render RAM"""
         try:
             result = genai.embed_content(
-                model="models/text-embedding-004",
+                model="models/gemini-embedding-2",
                 content=text_list,
                 task_type="retrieval_document"
             )
