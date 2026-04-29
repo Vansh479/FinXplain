@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
@@ -24,7 +24,10 @@ export function Navbar() {
   const pathname = usePathname();
   const router = useRouter();
 
+  const [isMounted, setIsMounted] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+  useEffect(() => { setIsMounted(true); }, []);
   const isMobile = useMediaQuery("(max-width: 768px)");
   const isHomePage = pathname === "/";
   const accessToken = useSelector((state: RootState) => state.auth.accessToken);
@@ -55,6 +58,10 @@ export function Navbar() {
     dispatch(logoutAndClearTimer());
     router.push('/');
   };
+
+  if (!isMounted) {
+    return null;
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-white/95 backdrop-blur-sm shadow-sm">

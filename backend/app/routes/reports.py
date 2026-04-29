@@ -1,4 +1,4 @@
-from typing import Optional 
+from typing import Optional, List
 from fastapi import APIRouter, Depends, HTTPException, File, UploadFile, Form
 from app.routes.auth import get_current_user
 from app.service.summary import get_financial_summary
@@ -9,11 +9,17 @@ router = APIRouter()
 async def query_financial_engine(
     fi_description: str = Form(...),
     reportssheet_type: str = Form("analyst"),
-    fiscal_pdf: Optional[UploadFile] = File(None), 
+    fiscal_pdf: Optional[UploadFile] = File(None),
+    fiscal_pdfs: Optional[List[UploadFile]] = File(None),
     current_user = Depends(get_current_user),
 ):
-    try: 
-        result = get_financial_summary(fi_description, reportssheet_type, fiscal_pdf)
+    try:
+        result = get_financial_summary(
+            fi_description,
+            reportssheet_type,
+            fiscal_pdf=fiscal_pdf,
+            fiscal_pdfs=fiscal_pdfs
+        )
 
         if not result:
             raise HTTPException(status_code=404, detail="Analysis failed.")

@@ -1,26 +1,38 @@
+import os
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
 from fastapi.security import OAuth2PasswordBearer
+from passlib.context import CryptContext
 from loguru import logger
-from app.core.config import SECRET_KEY, ALGORITHM
+from dotenv import load_dotenv
 
 from app.db.models import UserModel
 from app.db.session import get_db
-from app.core.hashing import hash_password, verify_password
 from app.db.schemas import UserSignupRequest, UserLoginRequest
+
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM", "HS256")
+ACCESS_TOKEN_EXPIRE_MINUTES = 90
+
+pwd_context = CryptContext(schemes=['bcrypt'], deprecated="auto")
+
+def hash_password(password: str):
+    return pwd_context.hash(password)
+
+def verify_password(plain_password: str, hashed_password: str):
+    return pwd_context.verify(plain_password, hashed_password)
 
 router = APIRouter()
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
-
-ACCESS_TOKEN_EXPIRE_MINUTES = 90
-
 def create_token(data: dict):
-    to_encode = data.copy() 
+    to_encode = data.copy()
     expiry_date = datetime.now(timezone.utc) + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
     to_encode.update({'exp': expiry_date})
     return jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
@@ -52,20 +64,20 @@ def sign_up(request: UserSignupRequest, db: Session = Depends(get_db)):
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
     hashed_password = hash_password(request.password)
     new_user = UserModel(
-        name=request.name, 
-        email=request.email, 
+        name=request.name,
+        email=request.email,
         password=hashed_password,
-        research_focus=request.research_focus,  
+        research_focus=request.research_focus,
         location=request.location,
         professional_role=request.professional_role
     )
-    try: 
+    try:
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
         return {
             "status": "success",
-            "message": "Profile created", 
+            "message": "Profile created",
             "user_details": {
                 "id": new_user.id,
                 "name": new_user.name,
@@ -73,7 +85,7 @@ def sign_up(request: UserSignupRequest, db: Session = Depends(get_db)):
             },
         }
     except IntegrityError:
-        db.rollback()  
+        db.rollback()
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Registration failed")
 
 def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(get_db)):

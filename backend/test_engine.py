@@ -9,15 +9,15 @@ from app.service.summary import get_financial_summary
 def test_query():
     print(" Starting FinXplain Engine Test...")
     
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = os.getenv("DEEPSEEK_API_KEY")
     if not api_key:
-        print(" ERROR: GEMINI_API_KEY is still missing from the environment!")
+        print(" ERROR: DEEPSEEK_API_KEY is missing from the environment!")
         print("Check if your .env file is in the same folder you are running this from.")
         return
 
-    query = "What are the key financial highlights and revenue growth mentioned for TCS in the latest report?"
+    query = "Summarize the key financial highlights from the report."
     print(f" Querying: {query}")
-    
+
     result = get_financial_summary(query, analysis_type="analyst")
     
     if result:

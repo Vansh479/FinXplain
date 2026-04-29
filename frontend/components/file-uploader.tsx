@@ -3,20 +3,19 @@
 import { useState, useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import { Button } from "@/components/ui/button";
-import { Upload, X, AlertCircle, CheckCircle, FileText } from "lucide-react";
+import { Upload, X, AlertCircle, FileText, Loader2 } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 
+const MAX_FILE_SIZE = 50 * 1024 * 1024;
+const MAX_FILES = 5;
+
 interface FileUploaderProps {
-  onFileUploaded?: () => void;
-  onFileSelect?: (file: File) => void;
+  onFilesChange?: (files: File[]) => void;
 }
 
-export function FileUploader({ onFileUploaded, onFileSelect }: FileUploaderProps) {
-  const [file, setFile] = useState<File | null>(null);
+export function FileUploader({ onFilesChange }: FileUploaderProps) {
+  const [files, setFiles] = useState<File[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
-
-  const MAX_FILE_SIZE = 10 * 1024 * 1024; // Upped to 10MB for large annual reports
 
   const onDrop = useCallback(
     (acceptedFiles: File[], rejectedFiles: any[]) => {
@@ -25,37 +24,35 @@ export function FileUploader({ onFileUploaded, onFileSelect }: FileUploaderProps
       if (rejectedFiles && rejectedFiles.length > 0) {
         const rejection = rejectedFiles[0];
         if (rejection.errors[0].code === "file-too-large") {
-          setError(`Report exceeds 10MB limit.`);
+          setError("Each file must be under 50MB.");
         } else if (rejection.errors[0].code === "file-invalid-type") {
-          setError(`Only PDF reports are accepted.`);
+          setError("Only PDF files are accepted.");
+        } else if (rejection.errors[0].code === "too-many-files") {
+          setError(`Maximum ${MAX_FILES} files allowed.`);
         } else {
-          setError(`Invalid document: ${rejection.errors[0].message}`);
+          setError(rejection.errors[0].message);
         }
         return;
       }
 
-      if (acceptedFiles.length > 0) {
-        const selectedFile = acceptedFiles[0];
-        setIsUploading(true);
-        
-        // Simulate local processing/indexing delay
-        setTimeout(() => {
-          setFile(selectedFile);
-          setIsUploading(false);
-          if (onFileUploaded) onFileUploaded();
-          if (onFileSelect) onFileSelect(selectedFile);
-        }, 800);
-      }
+      const newFiles = [...files, ...acceptedFiles].slice(0, MAX_FILES);
+      setFiles(newFiles);
+      if (onFilesChange) onFilesChange(newFiles);
     },
-    [onFileUploaded, onFileSelect]
+    [files, onFilesChange]
   );
+
+  const removeFile = (index: number) => {
+    const newFiles = files.filter((_, i) => i !== index);
+    setFiles(newFiles);
+    if (onFilesChange) onFilesChange(newFiles);
+  };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
     accept: { "application/pdf": [".pdf"] },
-    maxFiles: 1,
+    maxFiles: MAX_FILES,
     maxSize: MAX_FILE_SIZE,
-    disabled: isUploading,
   });
 
   const formatFileSize = (bytes: number) => {
@@ -72,47 +69,44 @@ export function FileUploader({ onFileUploaded, onFileSelect }: FileUploaderProps
         </Alert>
       )}
 
-      {!file ? (
+      {files.length < MAX_FILES && (
         <div
           {...getRootProps()}
-          className={`border-2 border-dashed rounded-xl p-8 text-center cursor-pointer transition-all duration-300 ${
+          className={`border-2 border-dashed rounded-xl p-6 text-center cursor-pointer transition-all ${
             isDragActive
-              ? "border-teal-500 bg-teal-50/50 scale-[1.01]"
+              ? "border-teal-500 bg-teal-50/50"
               : "border-slate-200 hover:border-teal-400 hover:bg-slate-50"
-          } ${isUploading ? "opacity-70" : ""}`}
+          }`}
         >
           <input {...getInputProps()} />
-          <div className="flex flex-col items-center">
-            <FileText className={`h-12 w-12 mb-3 ${isDragActive ? "text-teal-600" : "text-slate-400"}`} />
-            <p className="text-sm text-slate-600 font-medium">
-              Drop fiscal report here, or <span className="text-teal-600 underline">browse files</span>
+          <div className="flex flex-col items-center gap-1">
+            <Upload className={`h-5 w-5 ${isDragActive ? "text-teal-600" : "text-slate-400"}`} />
+            <p className="text-xs text-slate-500">
+              Drop PDFs here, or <span className="text-teal-600 underline">browse</span>
             </p>
-            <p className="text-xs text-slate-400 mt-2">
-              PDF Standard • Max 10MB
+            <p className="text-[10px] text-slate-400">
+              PDF only &bull; Up to {MAX_FILES} files &bull; Max 50MB each
             </p>
           </div>
         </div>
-      ) : (
-        <div className="border rounded-xl p-5 bg-white border-teal-200 shadow-sm transition-all animate-in fade-in zoom-in-95">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-4">
-              <div className="p-2 bg-teal-100 rounded-lg">
-                <CheckCircle className="h-5 w-5 text-teal-600" />
+      )}
+
+      {files.length > 0 && (
+        <div className="space-y-2 mt-2">
+          {files.map((file, index) => (
+            <div key={index} className="flex items-center justify-between border rounded-lg p-3 bg-white border-slate-200">
+              <div className="flex items-center gap-3 min-w-0">
+                <FileText className="h-4 w-4 text-teal-600 shrink-0" />
+                <div className="min-w-0">
+                  <p className="text-xs font-medium text-slate-800 truncate max-w-[200px]">{file.name}</p>
+                  <p className="text-[10px] text-slate-400">{formatFileSize(file.size)}</p>
+                </div>
               </div>
-              <div className="text-sm">
-                <p className="font-bold text-slate-900 truncate max-w-[250px]">{file.name}</p>
-                <p className="text-slate-500 text-xs font-mono">{formatFileSize(file.size)}</p>
-              </div>
+              <Button variant="ghost" size="sm" onClick={() => removeFile(index)} className="h-6 w-6 p-0 rounded-full hover:bg-red-50 hover:text-red-600 shrink-0">
+                <X className="h-3 w-3" />
+              </Button>
             </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => setFile(null)}
-              className="hover:bg-red-50 hover:text-red-600 rounded-full h-8 w-8 p-0"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </div>
+          ))}
         </div>
       )}
     </div>

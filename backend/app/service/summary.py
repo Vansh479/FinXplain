@@ -1,9 +1,9 @@
 import os
 import datetime
-import gc  
+import gc
 from pypdf import PdfReader
 from loguru import logger
-from app.service.llm.gemini import GeminiLLM
+from app.service.llm_client import DeepSeekLLM
 from app.schemas.response import analyst_schema, investor_schema
 from app.service.rag_engine import RAGEngine
 
@@ -11,83 +11,125 @@ _global_rag_engine = None
 _llm_client = None
 
 def get_rag_engine():
-    """Lazy initializer for RAG Engine - Loads only when needed"""
     global _global_rag_engine
     if _global_rag_engine is None:
         try:
-            logger.info("FinXplain: Loading RAG Engine into RAM...")
+            logger.info("FinXplain: Loading RAG Engine...")
             _global_rag_engine = RAGEngine()
-            gc.collect() 
+            gc.collect()
         except Exception as e:
             logger.error(f"RAG Engine Load Failure: {e}")
     return _global_rag_engine
 
 def get_llm_client():
-    """Lazy initializer for LLM Client"""
     global _llm_client
     if _llm_client is None:
         try:
-            _llm_client = GeminiLLM()
+            _llm_client = DeepSeekLLM()
         except Exception as e:
             logger.error(f"LLM Client Load Failure: {e}")
     return _llm_client
 
-def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None) -> dict | None:
-    try:
-        engine = get_rag_engine()
-        llm = get_llm_client()
+def extract_pdf_text(pdf_file):
+    """Extract and chunk text from a single uploaded PDF."""
+    reader = PdfReader(pdf_file)
+    full_text = ""
+    for page in reader.pages:
+        text = page.extract_text()
+        if text:
+            full_text += text + "\n"
+    paragraphs = [p.strip() for p in full_text.split("\n\n") if len(p.strip()) > 50]
+    return "\n\n".join(paragraphs[:40])
 
+def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None, fiscal_pdfs: list = None) -> dict | None:
+    try:
+        llm = get_llm_client()
         if not llm:
             raise ValueError("LLM Client not initialized")
 
-        query_lower = user_query.lower()
-        definitions = ["what is", "define", "meaning", "explain", "concept", "definition"]
-        is_general_query = any(word in query_lower for word in definitions)
-
-        kb_context = ""
-        if engine:
-            kb_chunks = engine.retrieve(user_query, top_k=4) 
-            kb_context = "\n".join(kb_chunks) if kb_chunks else ""
-
-        uploaded_context = ""
+        doc_context = ""
         filename = "Knowledge Base"
-        if fiscal_pdf:
-            filename = fiscal_pdf.filename
+        has_uploaded_doc = False
+
+        # Process uploaded PDFs (single or multiple)
+        if fiscal_pdfs and len(fiscal_pdfs) > 0:
+            has_uploaded_doc = True
+            all_chunks = []
+            filenames = []
+            for pdf in fiscal_pdfs:
+                try:
+                    chunk_text = extract_pdf_text(pdf.file)
+                    if chunk_text:
+                        all_chunks.append(chunk_text)
+                        filenames.append(pdf.filename)
+                except Exception as e:
+                    logger.error(f"PDF Parse Error for {pdf.filename}: {e}")
+            doc_context = "\n\n".join(all_chunks)
+            filename = ", ".join(filenames) if filenames else "Uploaded Documents"
+            logger.info(f"Processed {len(filenames)} uploaded PDF(s)")
+        elif fiscal_pdf:
+            has_uploaded_doc = True
             try:
-                reader = PdfReader(fiscal_pdf.file)
-                for i in range(min(len(reader.pages), 5)):
-                    text = reader.pages[i].extract_text()
-                    if text:
-                        uploaded_context += text + "\n"
-            except Exception as pdf_err:
-                logger.error(f"PDF Parse Error: {pdf_err}")
-
-        combined_context = f"--- STATIC KNOWLEDGE BASE ---\n{kb_context}\n\n--- UPLOADED DOCUMENT ---\n{uploaded_context}"
-      
-        smart_prompt = f"""
-        ROLE: Senior Financial Analyst AI
-        
-        TASK:
-        1. Evaluate if the PROVIDED DOCUMENTS contain data for the company mentioned in: "{user_query}".
-        2. If the query is a GENERAL DEFINITION (e.g., 'What is EBITDA?'), IGNORE the documents and provide a professional accounting definition.
-        3. If the documents are about a different company (e.g., Docs are TCS, Query is Nvidia):
-           - Start by saying: "The provided documents do not contain information for this company."
-           - Provide the answer using your INTERNAL GENERAL KNOWLEDGE.
-        4. If the documents ARE relevant, provide a deep-dive analysis grounded strictly in the text.
-
-        DOCUMENTS:
-        {combined_context}
-
-        USER QUERY: {user_query}
-        """
-
-        if is_general_query:
-            response_data = llm.generate_content(smart_prompt) 
-            final_type = "chat"
+                doc_context = extract_pdf_text(fiscal_pdf.file)
+                filename = fiscal_pdf.filename
+                logger.info(f"Processed uploaded PDF: {filename}")
+            except Exception as e:
+                logger.error(f"PDF Parse Error: {e}")
         else:
+            # No PDF uploaded — try static knowledge base
+            engine = get_rag_engine()
+            if engine:
+                kb_chunks = engine.retrieve(user_query, top_k=5)
+                if kb_chunks:
+                    doc_context = "\n\n".join(kb_chunks)
+
+        if has_uploaded_doc and doc_context:
+            # Document uploaded — ALWAYS ground the answer in it
+            role_instruction = (
+                "You are a financial analyst performing a detailed audit. "
+                "Focus on: company profile, viability assessment, operational metrics, "
+                "governance structure, fiscal history, structural risks, and strategic outlook. "
+                "Use a formal, investigative tone."
+            ) if analysis_type == "analyst" else (
+                "You are an investor evaluating a potential investment. "
+                "Focus on: SWOT analysis, valuation metrics, key financial terms, "
+                "due diligence questions, and strategic growth outlook. "
+                "Use a decision-oriented, opportunity-focused tone."
+            )
+            prompt = (
+                f"{role_instruction}\n\n"
+                f"Here is the content from the uploaded financial document(s):\n\n{doc_context}\n\n"
+                f"Based ONLY on this document, answer: {user_query}\n\n"
+                f"If the document does not contain the specific data requested, "
+                f"say 'The uploaded document does not contain this information.'"
+            )
             schema = analyst_schema if analysis_type == "analyst" else investor_schema
-            response_data = llm.generate(smart_prompt, schema)
+            response_data = llm.generate(prompt, schema)
             final_type = analysis_type
+        elif doc_context:
+            # No uploaded doc, but KB has relevant context
+            prompt = (
+                f"Here is the content from the knowledge base:\n\n{doc_context}\n\n"
+                f"Based ONLY on this context, answer: {user_query}\n\n"
+                f"If it does not contain the specific data requested, "
+                f"say 'The knowledge base does not contain this information.'"
+            )
+            is_general_definition = any(word in user_query.lower() for word in ["what is", "define", "meaning", "explain", "concept", "definition"])
+            if is_general_definition:
+                response_data = llm.generate_content(
+                    f"Provide a clear financial definition for: {user_query}"
+                )
+                final_type = "chat"
+            else:
+                schema = analyst_schema if analysis_type == "analyst" else investor_schema
+                response_data = llm.generate(prompt, schema)
+                final_type = analysis_type
+        else:
+            # No document at all — use LLM general knowledge
+            response_data = llm.generate_content(
+                f"Answer this financial question using your general knowledge: {user_query}"
+            )
+            final_type = "chat"
 
         gc.collect()
 
@@ -100,7 +142,7 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None) 
         }
 
     except Exception as e:
-        logger.error(f"Critical RAG Error: {e}")
+        logger.error(f"Critical Error: {e}")
         import traceback
         logger.debug(traceback.format_exc())
         return None
