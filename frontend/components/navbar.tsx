@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { Menu, X, ChevronDown, BarChart3, LayoutDashboard, Settings, LogOut, FileText } from "lucide-react";
+import { Menu, X, ChevronDown, BarChart3, LayoutDashboard, LogOut, FileText } from "lucide-react";
 import { useMediaQuery } from "@/hooks/use-media-query";
 import { RootState } from "@/redux/store";
 import { logoutAndClearTimer } from "@/redux/slices/authSlice";
@@ -84,17 +84,12 @@ export function Navbar() {
               {isHomePage ? (
                 <>
                   <button onClick={() => scrollToSection("features")} className="text-sm font-medium text-gray-500 transition-colors hover:text-teal-600">Features</button>
-                  <button onClick={() => scrollToSection("how-it-works")} className="text-sm font-medium text-gray-500 transition-colors hover:text-teal-600">Methodology</button>
+                  <button onClick={() => scrollToSection("how-it-works")} className="text-sm font-medium text-gray-500 transition-colors hover:text-teal-600">How It Works</button>
                 </>
               ) : (
-                <>
-                  <Link href="/frameworks" className={`text-sm font-medium transition-colors hover:text-teal-600 ${pathname === '/frameworks' ? 'text-teal-600' : 'text-gray-500'}`}>
-                    Frameworks
-                  </Link>
-                  <Link href="/analysis" className={`text-sm font-medium transition-colors hover:text-teal-600 ${pathname === '/analysis' ? 'text-teal-600' : 'text-gray-500'}`}>
-                    Analysis Engine
-                  </Link>
-                </>
+                <Link href="/analysis" className={`text-sm font-medium transition-colors hover:text-teal-600 ${pathname === '/analysis' ? 'text-teal-600' : 'text-gray-500'}`}>
+                  Analysis Engine
+                </Link>
               )}
             </nav>
           )}
@@ -113,7 +108,7 @@ export function Navbar() {
                       <ChevronDown className="h-4 w-4 text-gray-500" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-60 p-2">
+                  <DropdownMenuContent align="end" className="w-56 p-2">
                     <div className="flex flex-col space-y-1 p-2">
                       <p className="text-sm font-semibold">{userName}</p>
                       <p className="text-xs text-gray-400 truncate">{userEmail}</p>
@@ -121,12 +116,7 @@ export function Navbar() {
                     <DropdownMenuSeparator />
                     <DropdownMenuItem asChild>
                       <Link href="/profile" className="cursor-pointer flex items-center">
-                        <LayoutDashboard className="mr-2 h-4 w-4" /> Profile Dashboard
-                      </Link>
-                    </DropdownMenuItem>
-                    <DropdownMenuItem asChild>
-                      <Link href="/profile" className="cursor-pointer flex items-center">
-                        <FileText className="mr-2 h-4 w-4" /> My Reports
+                        <LayoutDashboard className="mr-2 h-4 w-4" /> My Reports
                       </Link>
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -141,7 +131,7 @@ export function Navbar() {
                     <Link href="/auth/login">Login</Link>
                   </Button>
                   <Button size="sm" className="bg-teal-600 hover:bg-teal-700" asChild>
-                    <Link href="/auth/signup">Get Started</Link>
+                    <Link href="/auth/signup">Sign Up</Link>
                   </Button>
                 </div>
               )
@@ -154,19 +144,17 @@ export function Navbar() {
         </div>
       </div>
 
-      {/* Mobile Menu */}
       {isMobile && isMenuOpen && (
-        <div className="container mx-auto px-4 pb-6 bg-white border-t animate-in slide-in-from-top-4">
+        <div className="container mx-auto px-4 pb-6 bg-white border-t">
           <nav className="flex flex-col space-y-4 pt-4">
             <Link href="/" className="text-sm font-medium py-2" onClick={() => setIsMenuOpen(false)}>Home</Link>
-            <Link href="/frameworks" className="text-sm font-medium py-2" onClick={() => setIsMenuOpen(false)}>Frameworks</Link>
             <Link href="/analysis" className="text-sm font-medium py-2" onClick={() => setIsMenuOpen(false)}>Analysis Engine</Link>
-            
+
             <div className="border-t pt-4">
               {isLoggedIn ? (
                 <div className="space-y-2">
                   <Button variant="ghost" className="w-full justify-start" asChild onClick={() => setIsMenuOpen(false)}>
-                    <Link href="/profile">Dashboard</Link>
+                    <Link href="/profile">My Reports</Link>
                   </Button>
                   <Button variant="ghost" className="w-full justify-start text-red-600" onClick={handleLogout}>
                     Log out

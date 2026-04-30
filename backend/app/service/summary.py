@@ -1,6 +1,7 @@
 import os
 import datetime
 import gc
+import re
 from pypdf import PdfReader
 from loguru import logger
 from app.service.llm_client import DeepSeekLLM
@@ -30,16 +31,46 @@ def get_llm_client():
             logger.error(f"LLM Client Load Failure: {e}")
     return _llm_client
 
-def extract_pdf_text(pdf_file):
-    """Extract and chunk text from a single uploaded PDF."""
+def chunk_pdf(pdf_file):
+    """Extract and chunk text from a PDF into segments."""
     reader = PdfReader(pdf_file)
     full_text = ""
-    for page in reader.pages:
+    for i, page in enumerate(reader.pages):
+        if i >= 30:
+            break
         text = page.extract_text()
         if text:
             full_text += text + "\n"
-    paragraphs = [p.strip() for p in full_text.split("\n\n") if len(p.strip()) > 50]
-    return "\n\n".join(paragraphs[:40])
+    chunks = [p.strip() for p in full_text.split("\n\n") if len(p.strip()) > 50]
+    return chunks[:80]
+
+def retrieve_relevant_chunks(chunks, query, max_chars=6000):
+    """Score chunks by keyword overlap with the query, return top matches."""
+    keywords = re.findall(r'\w+', query.lower())
+    stop_words = {"the", "a", "an", "is", "are", "was", "were", "be", "been",
+                  "in", "on", "at", "to", "for", "of", "with", "by", "from",
+                  "and", "or", "but", "not", "this", "that", "it", "its",
+                  "what", "how", "why", "when", "where", "do", "does", "did",
+                  "i", "we", "you", "they", "he", "she", "has", "have", "had",
+                  "can", "will", "would", "could", "should", "may", "might",
+                  "tell", "me", "about", "give", "please", "summarise", "summarize"}
+    keywords = [k for k in keywords if k not in stop_words]
+
+    scored = []
+    for chunk in chunks:
+        chunk_lower = chunk.lower()
+        score = sum(1 for kw in keywords if kw in chunk_lower)
+        if score > 0:
+            scored.append((score, chunk))
+
+    scored.sort(reverse=True, key=lambda x: x[0])
+
+    result = ""
+    for _, chunk in scored:
+        if len(result) + len(chunk) > max_chars:
+            break
+        result += chunk + "\n\n"
+    return result.strip() if result else "\n\n".join(chunks[:5])
 
 def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None, fiscal_pdfs: list = None) -> dict | None:
     try:
@@ -58,10 +89,11 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None, 
             filenames = []
             for pdf in fiscal_pdfs:
                 try:
-                    chunk_text = extract_pdf_text(pdf.file)
-                    if chunk_text:
-                        all_chunks.append(chunk_text)
-                        filenames.append(pdf.filename)
+                    chunks = chunk_pdf(pdf.file)
+                    relevant = retrieve_relevant_chunks(chunks, user_query)
+                    if relevant:
+                        all_chunks.append(relevant)
+                    filenames.append(pdf.filename)
                 except Exception as e:
                     logger.error(f"PDF Parse Error for {pdf.filename}: {e}")
             doc_context = "\n\n".join(all_chunks)
@@ -70,7 +102,8 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None, 
         elif fiscal_pdf:
             has_uploaded_doc = True
             try:
-                doc_context = extract_pdf_text(fiscal_pdf.file)
+                chunks = chunk_pdf(fiscal_pdf.file)
+                doc_context = retrieve_relevant_chunks(chunks, user_query)
                 filename = fiscal_pdf.filename
                 logger.info(f"Processed uploaded PDF: {filename}")
             except Exception as e:
@@ -84,7 +117,6 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None, 
                     doc_context = "\n\n".join(kb_chunks)
 
         if has_uploaded_doc and doc_context:
-            # Document uploaded — ALWAYS ground the answer in it
             role_instruction = (
                 "You are a financial analyst performing a detailed audit. "
                 "Focus on: company profile, viability assessment, operational metrics, "
@@ -98,7 +130,7 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None, 
             )
             prompt = (
                 f"{role_instruction}\n\n"
-                f"Here is the content from the uploaded financial document(s):\n\n{doc_context}\n\n"
+                f"Here are the relevant excerpts from the uploaded document(s):\n\n{doc_context}\n\n"
                 f"Based ONLY on this document, answer: {user_query}\n\n"
                 f"If the document does not contain the specific data requested, "
                 f"say 'The uploaded document does not contain this information.'"
@@ -107,7 +139,6 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None, 
             response_data = llm.generate(prompt, schema)
             final_type = analysis_type
         elif doc_context:
-            # No uploaded doc, but KB has relevant context
             prompt = (
                 f"Here is the content from the knowledge base:\n\n{doc_context}\n\n"
                 f"Based ONLY on this context, answer: {user_query}\n\n"
@@ -125,7 +156,6 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None, 
                 response_data = llm.generate(prompt, schema)
                 final_type = analysis_type
         else:
-            # No document at all — use LLM general knowledge
             response_data = llm.generate_content(
                 f"Answer this financial question using your general knowledge: {user_query}"
             )

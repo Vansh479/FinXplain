@@ -39,12 +39,18 @@ def create_token(data: dict):
 
 @router.post('/login')
 def login(request: UserLoginRequest, db: Session = Depends(get_db)):
+    import time
+    t0 = time.time()
     user = db.query(UserModel).filter(UserModel.email == request.email).first()
+    t1 = time.time()
     if not user:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Account not found")
     if not verify_password(request.password, user.password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
+    t2 = time.time()
     token = create_token({"sub": str(user.id)})
+    t3 = time.time()
+    logger.info(f"Login timing: DB={t1-t0:.3f}s bcrypt={t2-t1:.3f}s JWT={t3-t2:.3f}s")
     return {
         "status": "success",
         "message": "Authenticated successfully",
@@ -59,10 +65,14 @@ def login(request: UserLoginRequest, db: Session = Depends(get_db)):
 
 @router.post('/sign-up')
 def sign_up(request: UserSignupRequest, db: Session = Depends(get_db)):
+    import time
+    t0 = time.time()
     existing_user = db.query(UserModel).filter(UserModel.email == request.email).first()
+    t1 = time.time()
     if existing_user:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Email already registered")
     hashed_password = hash_password(request.password)
+    t2 = time.time()
     new_user = UserModel(
         name=request.name,
         email=request.email,
@@ -75,6 +85,8 @@ def sign_up(request: UserSignupRequest, db: Session = Depends(get_db)):
         db.add(new_user)
         db.commit()
         db.refresh(new_user)
+        t3 = time.time()
+        logger.info(f"Signup timing: DB_check={t1-t0:.3f}s bcrypt_hash={t2-t1:.3f}s DB_write={t3-t2:.3f}s")
         return {
             "status": "success",
             "message": "Profile created",

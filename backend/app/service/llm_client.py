@@ -9,16 +9,14 @@ class DeepSeekLLM:
         if not api_key:
             logger.error("FinXplain Engine: DEEPSEEK_API_KEY missing from environment.")
             raise ValueError("DeepSeek API Key Required")
-        
-        # DeepSeek uses the OpenAI-compatible SDK
+
         self.client = OpenAI(
-            api_key=api_key, 
+            api_key=api_key,
             base_url="https://api.deepseek.com"
         )
-        self.model_id = "deepseek-chat" # This points to DeepSeek V4
+        self.model_id = "deepseek-chat"
 
     def generate_content(self, prompt: str) -> str:
-        """Method for raw text (definitions, general chat)"""
         try:
             response = self.client.chat.completions.create(
                 model=self.model_id,
@@ -30,30 +28,33 @@ class DeepSeekLLM:
             )
             return response.choices[0].message.content
         except Exception as e:
-            logger.error(f"DeepSeek Raw Text Error: {e}")
+            logger.error(f"DeepSeek Text Error: {e}")
             return f"Error: {str(e)}"
 
     def generate(self, prompt: str, schema: dict) -> dict | None:
-        """Method for structured analysis (Analyst/Investor reports)"""
-        # Inject strictness into the prompt
+        schema_fields = ", ".join(schema.get("properties", {}).keys())
         strict_prompt = (
             f"{prompt}\n\n"
-            "STRICT RULE: If the provided document context does not contain the data needed "
-            "to fill a specific field in the JSON schema, set that field to null or 'Data not found'. "
-            "DO NOT HALLUCINATE NUMBERS."
+            f"Output ONLY valid JSON with these fields: {schema_fields}.\n"
+            "If the document does not contain data for a field, set it to null or 'Not found'.\n"
+            "DO NOT HALLUCINATE NUMBERS.\n"
+            "Return ONLY the JSON object, nothing else."
         )
 
         try:
             response = self.client.chat.completions.create(
                 model=self.model_id,
                 messages=[
-                    {"role": "system", "content": "You are a strict financial analyst that outputs ONLY valid JSON."},
+                    {"role": "system", "content": "You are a strict financial analyst. Output ONLY valid JSON."},
                     {"role": "user", "content": strict_prompt}
                 ],
-                response_format={'type': 'json_object'},
-                temperature=0.1 
+                temperature=0.1
             )
-            return json.loads(response.choices[0].message.content)
+            text = response.choices[0].message.content.strip()
+            # Remove markdown code block if present
+            if text.startswith("```"):
+                text = text.split("\n", 1)[1].rsplit("\n", 1)[0]
+            return json.loads(text)
         except Exception as e:
             logger.error(f"DeepSeek Structured Error: {e}")
             return None

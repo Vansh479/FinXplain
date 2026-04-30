@@ -102,7 +102,7 @@ class RAGEngine:
 
         try:
             response = self.deepseek.chat.completions.create(
-                model="deepseek-v4-flash",
+                model="deepseek-chat",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"CONTEXT:\n{context}\n\nQUERY: {query}"}
