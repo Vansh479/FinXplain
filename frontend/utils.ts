@@ -7,8 +7,8 @@ interface DecodedToken {
   [key: string]: any;
 }
 
- export const apiBaseURL = "https://finxplain.onrender.com"; 
-// export const apiBaseURL = "http://localhost:8000";
+//  export const apiBaseURL = "https://finxplain.onrender.com"; 
+ export const apiBaseURL = "http://localhost:8000";
 
 export const fetchWithAuth = async (url: string, options: RequestInit = {}): Promise<Response> => {
     const state = store.getState();

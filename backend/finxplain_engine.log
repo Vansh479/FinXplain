@@ -631,3 +631,37 @@ response_schema.is-instance[_UnionGenericAlias]
 2026-04-30 13:26:13.888 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
 2026-04-30 13:26:14.412 | INFO     | app.service.summary:get_financial_summary:212 - Live market data found: Nvidia (NVDA): $209.25 | Change: -3.82 (-1.79%) | Previous Close: $213.07...
 2026-04-30 13:26:15.851 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 1.9633s
+2026-04-30 13:56:23.674 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/details
+2026-04-30 13:56:23.822 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.1514s
+2026-04-30 13:56:23.831 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | GET /user/reports
+2026-04-30 13:56:23.848 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 0.0168s
+2026-04-30 13:56:52.346 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 13:57:14.348 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 22.0040s
+2026-04-30 14:11:29.734 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:11:36.806 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 7.0755s
+2026-04-30 14:14:18.361 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:15:48.772 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 90.4111s
+2026-04-30 14:19:25.091 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:19:26.862 | INFO     | app.service.summary:get_financial_summary:212 - Live market data found: Tcs (TCS.NS): ₹2478.50 | Change: +3.80 (+0.15%) | Previous Close: ₹2474.70...
+2026-04-30 14:19:30.430 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 5.3389s
+2026-04-30 14:21:11.699 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:21:20.146 | INFO     | app.service.summary:get_financial_summary:152 - Processed 2 uploaded PDF(s)
+2026-04-30 14:21:28.675 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 16.9788s
+2026-04-30 14:26:54.209 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:26:57.105 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 2.8969s
+2026-04-30 14:28:02.709 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:28:04.392 | INFO     | app.service.summary:get_financial_summary:212 - Live market data found: Tcs (TCS.NS): ₹2474.50 | Change: -0.20 (-0.01%) | Previous Close: ₹2474.70...
+2026-04-30 14:28:07.747 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 5.0377s
+2026-04-30 14:28:56.038 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:29:00.991 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 4.9551s
+2026-04-30 14:29:39.813 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:29:44.113 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 4.3003s
+2026-04-30 14:31:51.040 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:31:51.757 | INFO     | app.service.summary:get_financial_summary:212 - Live market data found: Tcs (TCS.NS): ₹2476.10 | Change: +1.40 (+0.06%) | Previous Close: ₹2474.70...
+2026-04-30 14:31:53.328 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 2.2891s
+2026-04-30 14:32:12.184 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:32:12.733 | INFO     | app.service.summary:get_financial_summary:212 - Live market data found: Tcs (TCS.NS): ₹2477.10 | Change: +2.40 (+0.10%) | Previous Close: ₹2474.70...
+2026-04-30 14:32:15.147 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 2.9636s
+2026-04-30 14:33:12.059 | INFO     | app.core.middleware:dispatch:11 - FinXplain Entry | POST /analysis/query
+2026-04-30 14:33:13.891 | INFO     | app.service.summary:get_financial_summary:152 - Processed 1 uploaded PDF(s)
+2026-04-30 14:33:29.439 | INFO     | app.core.middleware:dispatch:18 - FinXplain Exit  | Status: 200 | Latency: 17.3813s
