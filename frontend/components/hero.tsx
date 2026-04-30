@@ -1,14 +1,14 @@
 "use client";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight, BarChart3 } from "lucide-react";
-import { useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 
 export function Hero() {
-  const accessToken = useSelector((state: RootState) => state.auth.accessToken);
-  const isLoggedIn = typeof accessToken === "string" && accessToken.trim() !== "";
-  const linkHref = isLoggedIn ? "/analysis" : "/auth/login";
+  const [isMounted, setIsMounted] = useState(false);
+  useEffect(() => { setIsMounted(true); }, []);
+
+  const linkHref = isMounted ? "/analysis" : "/auth/login";
 
   return (
     <section className="relative py-20 overflow-hidden bg-gradient-to-b from-white to-slate-50">

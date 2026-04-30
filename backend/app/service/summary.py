@@ -1,12 +1,63 @@
 import os
+import json
 import datetime
 import gc
 import re
+import urllib.request
 from pypdf import PdfReader
 from loguru import logger
 from app.service.llm_client import DeepSeekLLM
 from app.schemas.response import analyst_schema, investor_schema
 from app.service.rag_engine import RAGEngine
+
+FINNHUB_KEY = os.getenv("FINNHUB_API_KEY", "")
+
+# Company names -> Yahoo Finance ticker
+KNOWN_STOCKS = {
+    "reliance": "RELIANCE.NS", "tcs": "TCS.NS", "bajaj finance": "BAJFINANCE.NS",
+    "bajaj": "BAJFINANCE.NS", "hdfc bank": "HDFCBANK.NS", "hdfc": "HDFCBANK.NS",
+    "icici bank": "ICICIBANK.NS", "icici": "ICICIBANK.NS", "infosys": "INFY.NS",
+    "wipro": "WIPRO.NS", "sbi": "SBIN.NS", "state bank": "SBIN.NS",
+    "itc": "ITC.NS", "apple": "AAPL", "google": "GOOGL", "alphabet": "GOOGL",
+    "microsoft": "MSFT", "amazon": "AMZN", "meta": "META",
+    "tesla": "TSLA", "nvidia": "NVDA", "netflix": "NFLX",
+    "bitcoin": "BTC-USD", "ethereum": "ETH-USD",
+}
+
+def fetch_stock_data(query):
+    """If query mentions a known stock, return live price data via Yahoo Finance."""
+    query_lower = query.lower()
+    matches = []
+    for name, symbol in KNOWN_STOCKS.items():
+        if name in query_lower:
+            matches.append((name, symbol))
+    if not matches:
+        return None
+
+    lines = []
+    for name, symbol in matches:
+        try:
+            url = f"https://query1.finance.yahoo.com/v8/finance/chart/{symbol}?range=1d&interval=1m"
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=5) as resp:
+                data = json.loads(resp.read())
+            result = data["chart"]["result"][0]
+            meta = result["meta"]
+            price = meta.get("regularMarketPrice")
+            prev_close = meta.get("previousClose", 0)
+            if price and price > 0:
+                change = price - prev_close
+                change_pct = (change / prev_close) * 100 if prev_close else 0
+                currency = "₹" if ".NS" in symbol else "$"
+                lines.append(
+                    f"{name.title()} ({symbol}): {currency}{price:.2f} | "
+                    f"Change: {change:+.2f} ({change_pct:+.2f}%) | "
+                    f"Previous Close: {currency}{prev_close:.2f}"
+                )
+        except Exception as e:
+            logger.error(f"Stock data error for {symbol}: {e}")
+
+    return "\n".join(lines) if lines else None
 
 _global_rag_engine = None
 _llm_client = None
@@ -156,10 +207,20 @@ def get_financial_summary(user_query: str, analysis_type: str, fiscal_pdf=None, 
                 response_data = llm.generate(prompt, schema)
                 final_type = analysis_type
         else:
-            response_data = llm.generate_content(
-                f"Answer this financial question using your general knowledge: {user_query}"
-            )
-            final_type = "chat"
+            live_data = fetch_stock_data(user_query)
+            if live_data:
+                logger.info(f"Live market data found: {live_data[:100]}...")
+                response_data = llm.generate_content(
+                    f"CURRENT MARKET DATA (this is live, real-time data fetched right now):\n\n{live_data}\n\n"
+                    f"Using ONLY the data above, answer: {user_query}\n"
+                    f"Do NOT say you don't have real-time data. The data IS provided above. Just answer using it."
+                )
+                final_type = "chat"
+            else:
+                response_data = llm.generate_content(
+                    f"Answer this financial question using your general knowledge: {user_query}"
+                )
+                final_type = "chat"
 
         gc.collect()
 
